@@ -1,0 +1,35 @@
+@startuml
+usecase (Checkout) as UC4 #yellow
+usecase (Customer\nAuthentication) as UC2  #lightgreen
+UC2"<<include>>" <...   UC4 
+usecase (View\Update\nShopping Cart) as UC3 #lightgreen
+UC3 "<<include>>" <...   UC4
+usecase (Calculate\nTaxes and \nShipping) as UC5 #lightgreen
+UC5 "<<include>>" <...   UC4 
+usecase (Payment) as UC6 #lightgreen
+UC6 "<<include>>" <...    UC4 
+usecase (Payment\nBy Credit) as UC11 #lightblue
+usecase (Payment\nBy PayPal) as UC12 #lightblue
+actor "Credit\nPayment Service"
+"Credit\nPayment Service" -- UC11
+UC6<|-- UC11
+actor "PayPal"
+"PayPal" --UC12
+UC6<|--UC12
+usecase (Calculate\nTotal) as UC7 #lightblue
+UC7 "<<include>>" <...    UC3 
+usecase (User\nSign-In) as UC8 #lightblue
+usecase (Remember Me) as UC9 #lightblue
+usecase (Single\nSign-On) as UC10 #lightblue
+actor "<<Service>>\nAuthentication" 
+"<<Service>>\nAuthentication"  -- UC8
+"<<Service>>\nAuthentication"  -- UC9
+"<<Service>>\nAuthentication"  -- UC10
+UC2<|-- UC8
+UC2<|-- UC9
+UC2<|-- UC10
+actor "Identity\nProvider"
+"Identity\nProvider" -- UC10
+
+@enduml
+
