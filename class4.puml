@@ -1,0 +1,49 @@
+@startuml
+class Hand {
++cards:list of card 
++value:int
++__init__()
++draw_from(deck:Deck)
++return_to(deck:Deck)
+}
+class Player {
++credit:int
++hand: Hand 
++name:str 
++stats : dict of str : int 
+}
+interface  Dealer {}
+class Game {
++dealer: Dealer
++deck: Deck
++players: list of Player 
++history: dict of str : list of int 
++__init__(*players:str)
++play()
++get_bust_probability():float
+}
+class Card {
++FACES : dict of str : int 
++face : str/int 
++suit:str 
++value:int
++__init__(face:str/int,suit:str)
++__str__():str
+}
+class Deck {
++cards: list of Card 
++__init__()
++shuffle()
++next_card(): Card
++return_cards(cards:list of Card)
+}
+Hand "1" --o "1" Player 
+Hand "1" --o "1" Dealer  
+Player "1" --o "1" Game  
+Card "0..*"--o "1" Hand 
+Card "0..*"--o "1" Deck 
+Deck "1" --o "1" Game
+Player <|-- Dealer
+Dealer "1"  --o "1" Game
+@enduml
+
