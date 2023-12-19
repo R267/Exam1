@@ -1,0 +1,25 @@
+@startuml
+skinparam componentStyle uml1 
+
+interface "Admin" as AD
+AD -> [Timetable Management System]
+
+[Timetable]
+interface "Data Access" as DA
+[Timetable Management System] --> [Timetable] : add/view
+DA  -> [Timetable]
+
+[Timetable]--> Database1
+
+[Database] 
+[Faculty]
+interface "Data Access" as AS
+[Timetable Management System] --> [Faculty] : add/view
+AS  -> [Faculty]
+[Subject]
+interface "Data Access" as AV
+[Timetable Management System] --> [Subject] : add/view
+AV -> [Subject] 
+
+Database1 --> [Database] 
+@enduml
