@@ -1,0 +1,112 @@
+@startuml INDZ task 5 ** Variant 2
+
+skinparam class {
+ArrowColor red
+BorderColor blue
+}
+
+entity PROFFESOR ##[bold]{
+   **<u>PROF_NUM</u>: PK**
+  --
+   **DEPT_CODE: FK1**
+   **PROF_SPECIALITY**
+   **PROF_RANK**
+   **PROF_LNAME**
+   **PROF_FNAME**
+   PROF_INITIAL
+   **PROF_EMAIL**
+}
+
+entity CLASS ##[bold]{
+  **<u>CLASS_CODE: PK</u>**
+  --
+  **CLASS_SECTION**
+  **CLASS_TIME**
+  **CRS_CODE: FK1**
+  **PROF_NUM: FK2**
+  **ROOM_CODE: FK3**
+  **SEMESTER_CODE: FK4**  
+}
+
+entity SEMESTER ##[bold]{
+  **<u>SEMESTER_CODE</u>: PK**
+  --
+  **SEMESTER_YEAR**
+  **SEMESTER_TERM**
+  **SEMESTER_START_DATE**
+  **SEMESTER_END_DATE**
+}
+
+entity SCHOOL ##[bold]{
+  **<u>SCHOOL_CODE</u>: PK**
+  --
+  **SCHOOL_NAME**
+  **PROF_NUM: FK1**
+}
+
+entity DEPARTMENT ##[bold]{
+  **<u>DEPT_CODE</u>: PK**
+  --
+  **DEPT_NAME**
+  **SCHOOL_CODE: FK1**
+  **PROF_NUM: FK2**
+}
+
+entity COURSE ##[bold]{
+  **<u>CRS_CODE: PK</u>**
+  --
+  **DEPT_CODE: FK1**
+  **CRS_TITLE**
+  **CRS_DESCRIPTION**
+  **CRS_CREDIT**
+}
+
+entity STUDENT ##[bold]{
+  **<u>STU_NUM</u>: PK**
+  --
+  DEPT_CODE: FK1
+  **STU_LNAME**
+  **STU_FNAME**
+  **STU_INITIAL**
+  STU_EMAIL
+  **PROF_NUM: FK2**
+}
+
+entity ENROLL ##[bold]{
+  **<u>CLASS_CODE</u>: PK, FK2**
+  **<u>STU_NUM</u>: PK, FK1**
+  --
+  **ENROLL_DATE**
+  **ENROLL_GRADE**
+}
+
+entity ROOM ##[bold]{
+  **<u>ROOM_CODE</u>: PK**
+  --
+  **ROOM_TYPE**
+  **BLDG_CODE: FK1**
+}
+
+entity BUILDING ##[bold]{
+  **<u>BLDG_CODE</u>: PK**
+  --
+  **BLDG_NAME**
+  **BLDG_LOCATION**
+}
+
+PROFFESOR ||.[#red,dashed,thickness=2].o{ CLASS #text:red; : teaches
+SEMESTER ||.[#red,dashed,thickness=2].o{ CLASS #text:red : includes
+COURSE ||.[#red,dashed,thickness=2].o{ CLASS #text:red : generates
+ROOM ||.[#red,dashed,thickness=2]up.o{ CLASS #text:red : is used for
+CLASS ||-[#red,thickness=2]right-o{ ENROLL #text:red : is found in
+PROFFESOR ||.[#red,dashed,thickness=2].o{ STUDENT #text:red : advises
+DEPARTMENT |o.[#red,dashed,thickness=2].o{ STUDENT #text:red : has
+STUDENT ||-[#red,thickness=2]left-o{ ENROLL #text:red : is written in
+BUILDING ||.[#red,dashed,thickness=2]left.o{ ROOM #text:red : contains
+SCHOOL |o.[#red,dashed,thickness=2]left.|| PROFFESOR #text:red : is dean of
+DEPARTMENT |o.[#red,dashed,thickness=2].|| PROFFESOR #text:red : chairs
+PROFFESOR }|.[#red,dashed,thickness=2].|| DEPARTMENT #text:red : employs
+SCHOOL  }|.[#red,dashed,thickness=2].|| DEPARTMENT #text:red : operates
+DEPARTMENT ||.[#red,dashed,thickness=2].o{ COURSE #text:red : offers
+
+@enduml
