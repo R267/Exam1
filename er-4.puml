@@ -1,0 +1,109 @@
+@startuml
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "PlayoffRound" as e01 {
+  --
+  id 
+  team1Id
+  team2Id
+  startTime
+  endTime
+  roundNum
+}
+
+entity "RoundStats" as e02 {
+  --
+  id
+  numShutouts
+  goalLeaderId
+  assistLeaderId
+  penaltyLeaderId
+  plusMinusLeaderId
+  faceoffsWonLeaderId
+  sogLeaderId
+}
+
+entity "UserStatsPicks" as e03 {
+  --
+  id
+  roundId
+  goalLeaderId
+  assistLeaderId
+  penaltyLeaderId
+  plusMinusLeaderId
+  faceoffsWonLeaderId
+  sogLeaderId
+  numShutouts
+  userId
+}
+
+entity "User" as e04 {
+  --
+  id
+  username 
+  password
+}
+entity "UserScorePicks" as e05 {
+  --
+  id
+  hockeyGameId
+  team1score
+  team2score
+  userId
+}
+entity "HockeyGame" as e06 {
+  --
+  id 
+  roundId 
+  startTime 
+  description 
+  team1Id 
+  team2Id
+}
+entity "HockeyTeam" as e07 {
+  --
+  id 
+  name 
+  logo
+}
+entity "GameScores" as e08 {
+  --
+  id 
+  team1score 
+  team2score
+}
+entity "HockeyTeamPlayer" as e09 {
+  --
+  id 
+  hockeyTeamId 
+  firstName
+  lastName
+  jerseyNum
+  position
+}
+entity "UserInfo" as e10 {
+  --
+  id 
+  firstName
+  lastName
+  email
+  round1Points
+  round2Points
+  round3Points
+  round4Points
+}
+e02    --o{  e01
+e03   --o{  e01
+e03 }o--o| e04
+e05 }o--o| e04
+e01 }|--|| e06
+e06  --o{ e07
+e05  --o{ e07
+e06 }|--|| e08
+e09 }|--|| e07
+e04 }|--|| e10
+@enduml
