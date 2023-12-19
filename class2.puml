@@ -1,0 +1,73 @@
+@startuml Task 1, var2
+class "interface machine" {
++turnOn()
+-turnOff()
+}
+
+class WashingMachine {
+    -washTime: integer
+    -rinceTime: integer
+    -spinTime: integer
+    --
+    +main()
+    -wash()
+    -rince
+    -spin()
+    -fill()
+    -empty()
+    -standartWash()
+    -twiceRince()
+}
+
+class Engine {
+    -Rotation: integer
+}
+
+class Timer {
+    -value: integer
+    -duration: integer
+    -count: integer
+    --
+    +getDuration(): duration
+    +setDuration(int integer)
+    +getValue(): timer
+    +setValue(int integer)
+    +getCount(): count
+    +setCount(int integer)
+    +start()
+    +count(): time
+}
+
+class WashOption {
+    -washSelection: integer
+    --
+    +getWashSelection(): integer
+    +setWashSelection(): void
+}
+
+class WaterSensor {
+    +currentLevel: integer
+    +desiredLevel: integer
+}
+
+class Sensor {
+    +Check(): Boolean
+}
+
+class TempSensor {
+}
+
+class DoorSensor {
+}
+
+Engine .up.|> "interface machine"
+WashingMachine .left.|> "interface machine"
+WashingMachine -left-> Engine : -engine
+WashingMachine -right-> Timer : -timer
+WashingMachine -down-> WashOption : -washOption
+WashingMachine -down-> WaterSensor : -waterSensor
+WaterSensor  -up-^ Sensor
+TempSensor -up-^ Sensor
+DoorSensor -up-^ Sensor
+
+@enduml
