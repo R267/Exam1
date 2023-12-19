@@ -1,0 +1,45 @@
+@startuml INDZ task 2 ** Variant 2
+left to right direction
+
+actor "Company \nemployee" as actorCompanyEmployee #Blue
+/''/
+(Assign batch to a \n destination retailer) as AssignBatch #LightYellow
+(Register a batch into \n FoodChain platform) as RegisterBatch #LightYellow
+/''/
+actorCompanyEmployee --> AssignBatch
+actorCompanyEmployee --> RegisterBatch
+
+actor "FoodChain \nweb platform" as actorFChain #blue 
+/''/
+(Assign a unique ID \n to the batch) as AssignID #LightYellow
+/''/
+RegisterBatch .> AssignID : Use
+actorFChain --> AssignID
+
+actor "FoodChain \nSmart-Contract" as actorFChainSmart #blue 
+/''/
+(Register a new item \n in the BC) as RegisterBC #LightYellow
+(Create a <delivery> \n process for the batch) as CreateDelivery #LightYellow
+(Add data on a \n process) as AddData #LightYellow
+(Register completed \n delivery) as RegDelivery #LightYellow
+/''/
+actorFChainSmart --> RegisterBC
+AssignID ..> RegisterBC : Use
+actorFChainSmart --> CreateDelivery
+actorFChainSmart --> AddData
+actorFChainSmart --> RegDelivery
+
+actor "Delivery truck's \n   loT device" as DeliveryTrack #blue 
+/''/
+(Scan the RFID tag of the \n batches loaded in the \n truck) as ScanRFID #LightYellow
+(Monitor truck's position and \n temperature and send data to \n BC) as MonitorTracks #LightYellow
+(Register that the \n product \n has reached the \n destination) as RegDestination #LightYellow
+/''/
+DeliveryTrack -> ScanRFID
+ScanRFID .> CreateDelivery : Use
+DeliveryTrack --> MonitorTracks
+MonitorTracks .> AddData : Use
+DeliveryTrack -> RegDestination
+RegDestination .> RegDelivery : Use
+
+@enduml
