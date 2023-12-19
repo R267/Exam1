@@ -1,0 +1,74 @@
+@startuml
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Payment" as e01 {
+  PK :pay_rept_no
+  --
+  pay_date
+  pay_amount
+}
+
+entity "Customer" as e02 {
+  PK : cust_no
+  --
+  cust_family
+  cust_given
+  cust_street
+  cust_town
+  cust_postcode
+  cust_code 
+}
+
+entity "Book" as e03 {
+  --
+  book_date
+  book_no_children
+  book_no_adults
+  book_cost
+  book_outstanding
+}
+
+entity "Tour" as e04 {
+  PK :tour_no
+  --
+  tour_name
+  tour_desc
+  tour_max_partic
+  tour_date_depart
+  tour_date_return
+  tour_child_cost
+  tour_adult_cost
+}
+entity "Agency" as e05 {
+  PK :agency_code
+  --
+  agency_name
+  agencyphone
+  agency_manager
+  addr_street
+  addr_city
+  addr_country
+}
+entity "Stop_AT" as e06 {
+  --
+  stop_date
+}
+entity "Location" as e07 {
+  PK :hotel_fax
+  --
+  hotel_name
+  hotel_city
+}
+
+e02   "makes"  ||...o{   e01
+e04  ||...o{ "credited with" e01
+e03 "makes" }|..|| e02
+e04 "for" ||---o{  e03
+e04 "organised by" }|...||   e05 
+e04 "has" ||---o{ e06
+e06 "at" }|--|| e07
+@enduml
