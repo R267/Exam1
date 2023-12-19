@@ -1,0 +1,19 @@
+Рівень 1: система
+!define C4_MODEL_URL https://www.dandoescode.com/_next/image?url=%2Fstatic%2Fimages%2Fc4-models-with-structurizr%2Fstructurizr-1-Context.png&w=3840&q=75
+@startuml
+title System Level C4 Diagram
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Context.puml
+!define CONTEXT_DIAGRAM_IMAGE <C4_MODEL_URL>
+
+System_Boundary(blog,"EnterPrise"){
+    Person(person,"Warehouse Staff","[Person]")
+    Person(person1,"Customer","[Person]")
+    System(blog1,"E-Commerce","[Software System]")
+    Rel(person,blog1,"Dispatches Orders","https")
+    Rel(person1,blog1,"Placers Orders","https") 
+}
+System_Ext(blog2,"Email System","[Software System] Sendgrid")
+Rel(blog1,blog2,"Trigger Emails","https") 
+Rel(blog2,person1,"Delivers emails","https") 
+!define CONTEXT_DIAGRAM_IMAGE
+@enduml
