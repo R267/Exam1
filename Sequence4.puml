@@ -1,0 +1,19 @@
+@startuml
+actor Actor
+participant "Department" 
+participant "Reception" 
+participant "Doctor"
+participant "Nurse"
+participant "Bed"
+Actor -> Department : dispatch
+Department -> Reception : register patient
+Reception --> Department : display patient health number
+Department -> Doctor : locate  doctor 
+Department -> Nurse : locate  nurse 
+Doctor -> Department : transform to department 
+Department --> Doctor : search available doctor 
+Department -> Nurse : search available nurse 
+Doctor -> Department
+Department --> Doctor : display result 
+Doctor -> Bed : search bed 
+@enduml
