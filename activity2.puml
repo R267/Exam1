@@ -1,0 +1,68 @@
+@startuml INDZ task 1 ** Variant 2
+
+skinparam activity {
+  StartColor purple 
+  EndColor purple
+  BarColor Purple
+  BackgroundColor orange
+  ArrowColor purple
+} 
+
+<style>
+activityDiagram {
+
+  diamond {
+    BackgroundColor Yellow
+    FontColor green
+    FontName arial
+    FontSize 15
+  }
+
+  arrow {
+    FontColor purple
+    FontName arial
+    FontSize 10
+  }
+}
+</style>
+
+(*) -->[HTTP Request] "ClickServlet.handleRequest()"
+
+--> "new Page"
+if "" then
+  -down-> ===B1===
+else
+  -right->"Page.onInit()"
+
+-right->if "" then
+  --> ===B2===
+else
+  ->"process Controls"
+
+-right->if "" then
+  --> ===B1===
+  else
+  --> ===B2===
+    -down->if "" then
+      --> "Page.onPost"
+      --> "Page.onRender()"
+    else
+      -right-> "Page.onGet()"
+      -->"Page.onRender()"
+--> ===B1===
+
+if "" then
+      --> "redirect request"
+      --> ===B3===
+else
+    -right-> if "" then
+      --> "forward request"
+      --> ===B3===
+    else 
+      -right-> "render page template"
+      --> ===B3===
+      --> "Page.onDestroy()" 
+endif
+  --> (*)
+@enduml
+
