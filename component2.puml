@@ -1,0 +1,25 @@
+@startuml INDZ task 3 ** Variant 2
+
+[ATM machine] as ATMm #LightGreen
+[Bank \n database] as BankDB #LightGreen
+[Customer \n console] as CConsole #LightGreen
+[Card reader] as CReader #LightGreen
+[Web page] as WebP #LightGreen 
+[Client \n desktop] as CDesktop #LightGreen
+[Employee \n console] as EConsole #LightGreen
+
+ATMm - ()"ATM transaction" 
+BankDB - ()"Account information"
+ATMm ..> BankDB
+CConsole - ATMm
+CReader -up- CConsole
+CReader .up.> BankDB
+()"Web merchant transaction" -up- CReader
+()"Online transaction" -up- WebP
+WebP .up.> BankDB
+CConsole -down- WebP
+EConsole -down- CDesktop
+CDesktop -down- ()"Client desktop transaction"
+CDesktop .up.> BankDB
+
+@enduml
