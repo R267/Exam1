@@ -1,0 +1,33 @@
+@startuml Task 2, var2
+actor Stick
+
+participant ":Online Shop \n Interface" #LightSeaGreen
+participant ":Item List \n" #LightSeaGreen
+participant ":Purchase Interface \n" #LightSeaGreen
+participant ":Checkout \n" #LightSeaGreen
+participant ":Payment Option \n" #LightSeaGreen
+
+skinparam Style strictuml
+skinparam SequenceMessageAlignment center
+
+Stick -> ":Online Shop \n Interface" : search items
+activate ":Online Shop \n Interface" #Yellow 
+":Online Shop \n Interface" -> ":Item List \n" ++ #yellow: item query
+deactivate ":Item List \n"
+Stick -> ":Online Shop \n Interface" : choose items
+deactivate ":Online Shop \n Interface"
+Stick -> ":Purchase Interface \n" ++ #yellow : purchase items
+":Purchase Interface \n" -> ":Online Shop \n Interface" ++ #yellow: get selected items
+":Online Shop \n Interface" -> ":Purchase Interface \n" --
+":Purchase Interface \n" -> ":Item List \n" ++ #yellow: query price info
+":Item List \n" -> ":Purchase Interface \n" --
+":Purchase Interface \n" -> Stick : show selected items
+":Purchase Interface \n" -> Stick : display price info
+":Purchase Interface \n" -> ":Checkout \n" ++ #yellow: authorize purchase
+":Checkout \n" -> ":Payment Option \n" ++ #yellow: choose payment option
+":Payment Option \n" --> ":Checkout \n" -- : place payment
+":Checkout \n" --> ":Purchase Interface \n" : print payment info
+":Purchase Interface \n" -> Stick : send notification
+":Checkout \n" -> Stick --: send email
+
+@enduml
