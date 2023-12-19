@@ -1,0 +1,60 @@
+@startuml INDZ task 4 ** Variant 2
+
+node "<u>**:WebServer**</u>" as a1 {
+    artifact "**Student** \n**Administration** \n**<<JSPs>>**"
+  }
+
+node "<u>:ApplicationServer</u> \n <<device>> \n {OS=Solaris}" as b1 {
+    node "<u>:FJBContainer</u> \n <<execution environment>>" {
+        
+        component "**Student**" as a2 {
+
+        }
+
+        component "**Seminar**" as b2 {
+
+        }
+        
+        component "**Schedule**" as c2 {
+
+        }
+
+        card d2 [
+            **<<deployment spec>>**
+             **Registration**
+            --
+            **execution: thread** 
+            **nestedTransaction: true**
+        ]
+
+        artifact "**Persistence** \n**<<infrastrucure>>** \n**{vendor=Ambysoft}**" as e2 {
+
+        }
+
+        a2 -[#white]down- b2
+        b2 -[#white]down- c2
+        c2 -[#white]down- d2
+        d2 -[#white]down- e2
+    }
+}
+
+node "<u>**:DBServer**</u> \n **{OS=LinuX}**" as c1 {
+    component "**University DB** \n **<<datastore>>** \n **{vendor=Oracle}**" {
+
+    }
+}
+
+node "<u>**Mainframe**</u> \n **{OS=MVS}**" as d1 {
+    card a3 [
+        **Course** 
+        **Management**
+        **<<legacy system>>**
+    ]
+}
+
+    a1 - b1 : <<RMI>>
+    b1 -left- c1 : <<JDBC>>
+    b1 -- d1 : <<message bus>>
+    
+
+@enduml
