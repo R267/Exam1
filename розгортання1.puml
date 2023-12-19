@@ -1,0 +1,39 @@
+@startuml
+node "<<device>> Application Server" {
+node "<<JSP server>> Tomcat 5.5" {
+node "<<executionEnvironment>>\nCatalina Servlet 2.4/ JSP 2.0  Container" {
+artifact book_club_app.war
+rectangle <<deployment spec>> {
+card web.xml
+}
+component OnlineOrders
+interface interface
+book_club_app.war ...> "manifest" OnlineOrders 
+web.xml ...>  book_club_app.war
+interface - OnlineOrders
+artifact user_services.jar 
+user_services.jar --* book_club_app.war
+file "web-tools-lib.jar"
+"web-tools-lib.jar" --* book_club_app.war
+component UserServices
+interface interface1
+interface1 - UserServices
+user_services.jar ...> UserServices
+}
+}
+}
+node "<<device>>\nDatabase Server"  {
+node "<<database system>>\nOracle 10g" {
+rectangle <<schema>> {
+card Users
+}
+rectangle <<schema1>> {
+card Orders
+}
+rectangle <<schema2>> {
+card Inventory
+}
+}
+}
+"<<device>> Application Server" --"<<protocol>>\nTCP\IP" "<<device>>\nDatabase Server"
+@enduml
