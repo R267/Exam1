@@ -1,0 +1,54 @@
+@startuml 1-st model c4
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title System context diagram
+
+Person(admin, "Customer", "A EG customer \n with valid account")
+System_Boundary(c1, " ") {
+    System_Ext(Notification, "Notifications", "Pushes notification \n to user's device")
+    Container(EGUser, "EG User Account", "Software System", "Allows customer to \n view information about \n their account and \n share meter readings")
+    System_Ext(Payments, "Payments", "Manages direct debit, \n card payments")
+    System_Ext(EGBackend, "EG Backend", "Stores all core \n information, user \n accounts, billing details \n etc.,")    
+}
+
+admin .down.> EGUser : Uses
+EGUser .down.> EGBackend : Uses
+EGUser .right.> Notification : Sends notification using
+Notification .up.> admin : Sends notification to
+EGBackend .right.> Payments : Raises payment using
+
+@enduml
+// 2 layer 
+@startuml 2-nd model c4
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Container diagram - EG User Account
+
+Person(admin, "Customer", "A EG customer with account")
+
+System_Boundary(a1, " ") {
+    Container(WebApp, "Web App", "Container: Node.js, JavaScript", "Renders login page \n with necessary \n assets")
+    Container(SnglPage, "Single page app", "Container: JavaScript and React", "Provides user capabilities based on their plan")
+    Container(MblApp, "Mobile App", "Container: Android", "Provides used \n capabilities \n based on their plan")
+    Container(Bckend, "Backend API app", "Container: Node.js, Javascript", "Provider User account \n manegment via \n JSON/HTTPS API")
+    Container(Database, "Database", "Container: MariaDB", "Stores user accounts, \n biling, plans, payment \n details etc.,")
+}
+
+System_Ext(Notification, "Notifications", "Pushes notification \n to user's device")
+System_Ext(Payments, "Payments", "Pushes notification \n to user's device")
+
+admin .down.> WebApp : Visits egenergy.com/login using \n [HTTPS]
+admin .down.> SnglPage : Views account, submit readings using
+WebApp .right.> SnglPage : Delivers to \n user browser
+admin .down.> MblApp : Views account, submit readings using
+SnglPage .down.> Bckend : Makes API calls to \n [JSON/HTTPS]
+MblApp ..> Bckend : Makes API calls to \n [JSON/HTTPS]
+Bckend .left.> Database : Reads from \n and writes to \n [PDO]
+
+Bckend .right.> Notification : Sends notificaton using \n [JSON/HTTPS]
+Bckend .right.> Payments : Triggers payment system using \n [JSON/HTTPS]
+
+Notification .up.> admin : Send notifications to
+
+@enduml
+
